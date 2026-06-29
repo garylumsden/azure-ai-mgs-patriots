@@ -1,13 +1,18 @@
 ---
 applyTo: '**'
 ---
-# Copilot Instructions — Agent Council (template)
+# Copilot Instructions — The Patriots Council
 
-This repository is the **Agent Council** template: a multi-agent **deliberation** engine on
-**Microsoft Foundry** + Azure. A council of expert agents reviews a document (a *Dossier*), debates it,
-and produces a structured **Assessment**; a **Nexus Analyst** then links assessments together.
+This repository is **The Patriots Council**: a multi-agent **deliberation** demo on **Microsoft
+Foundry** + Azure, themed on the **Patriots (“La‑li‑lu‑le‑lo”)** of *Metal Gear Solid*. Twelve AIs (the
+long-dead Wisemen's Committee) review a **Proposal** for a Patriot plan, debate it, and produce a
+structured **Assessment**; a **Nexus Analyst** then links assessments together. The active roster:
+Chair **Major Zero**, Moderator **JD**, Nexus Analyst **Sigint**, and members **GW, TJ, AL, TR,
+Big Boss, EVA, Para-Medic, Ocelot, The Boss**.
 
-The engine is **scenario-neutral**. A concrete demo is created by configuration, not code — see the
+The scenario is **configuration, not code**: branding, grounding, the council roster, and persona
+prompts live in `config/`. The underlying engine is **scenario-neutral** — keep it that way (never bake
+the Patriots scenario into `src/**`). To re-theme or adjust the roster, edit `config/` or re-run the
 **Scenario Architect** agent (`.github/agents/scenario-architect.agent.md`).
 
 ## Golden rules

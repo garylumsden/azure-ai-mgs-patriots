@@ -1,34 +1,49 @@
-# Azure Agent Council — Template
+# The Patriots Council
 
-A reusable **template** for a multi-agent **deliberation** demo on **Microsoft Foundry** and Azure. A
-council of expert agents — debating **members** plus a **Chair**, a **Moderator**, and a **Nexus
-Analyst** — reviews a document (a *Dossier*), holds a live, parliament-style debate, and produces a
-structured **Assessment**. A **Nexus Analyst** then discovers how each assessment connects to prior
-ones (implications, contradictions, dependencies…).
+> *"We're not hiding the truth. We're creating it."*
 
-This repository ships the **engine, infrastructure, UI, and a guided setup agent** — but **no
-scenario**. You make it concrete by describing your scenario (premise, branding, council, grounding)
-and letting the **Scenario Architect** Copilot agent generate the configuration.
+A multi-agent **deliberation** demo on **Microsoft Foundry** and Azure, themed on the **Patriots
+(“La‑li‑lu‑le‑lo”)** of the *Metal Gear Solid* saga. Twelve AIs — the long-dead **Wisemen's Committee** —
+convene to rule on a **Proposal** for one of the Patriots' grand plans (*Les Enfants Terribles*, the S³
+Plan, Sons of the Patriots, the war economy, the AI network…). They hold a live, parliament-style debate
+and produce a structured **Assessment**; a **Nexus Analyst** then links each verdict to the plans that
+came before.
 
-> Unconfigured, the app runs on **neutral defaults**: generic branding and an empty council. Configure
-> a scenario to bring the council to life.
+## The council of twelve
+
+| Seat | Persona | Remit |
+|---|---|---|
+| **Chair** | Major Zero — Cipher | Founder; weighs the council and renders the verdict |
+| **Moderator** | JD — John Doe | Core AI; directs the floor (routing only) |
+| **Nexus Analyst** | Sigint — Donald Anderson | Links each verdict to prior plans |
+| Member | GW — George Washington | Foundational order & system architecture |
+| Member | TJ — Thomas Jefferson | Liberty & the illusion of freedom |
+| Member | AL — Abraham Lincoln | Unity & preservation of the system |
+| Member | TR — Theodore Roosevelt | Force, expansion & the war economy |
+| Member | Big Boss — Naked Snake | The soldier's truth & battlefield reality |
+| Member | EVA — Big Mama | Espionage, deception & the human cost |
+| Member | Para-Medic — Dr. Clark | Genome, bioethics & control of life |
+| Member | Revolver Ocelot — ADAM | Manipulation, misdirection & the long game |
+| Member | The Boss — The Joy | The original will & the council's conscience |
+
+GW, TJ, AL and TR are the four Patriots AIs named after US presidents; **JD** is the core, the odd one
+out. The remaining seven seats are filled by the Patriots' human founders, whose wills the
+network encodes. Members may cite **metalgear.fandom.com** via the grounding tool for lore.
+
+> Built on a reusable, scenario-neutral engine. To re-theme or adjust the roster, edit `config/` or
+> re-run the **Scenario Architect** agent (`.github/agents/scenario-architect.agent.md`).
 
 ---
 
 ## Quickstart
 
-### 1. Configure a scenario (recommended: the guided agent)
+### 1. The scenario is already configured
 
-Open this repo in an editor with **GitHub Copilot** and run the **Scenario Architect** custom agent
-(`.github/agents/scenario-architect.agent.md`). It interviews you and then writes:
-
-- `config/scenario.json` — branding, grounding domains, and the council composition
-- `config/prompts/<member-id>.md` — a system prompt per persona
-- optional branding SVG (`wwwroot/branding/logo.svg`) and sample dossiers (`data/policies/*.md`)
-- refreshed `README.md` + instructions describing your concrete scenario
-
-Prefer to do it by hand? Copy `config/scenario.example.json` to `config/scenario.json` and edit it,
-then add a `config/prompts/<id>.md` for each member.
+This repo ships configured for **The Patriots Council** — `config/scenario.json` plus a persona prompt
+per seat in `config/prompts/*.md`, an emblem at `wwwroot/branding/logo.svg`, and five sample Proposals in
+`data/policies/`. Prompts are read at **startup**, so editing a persona and restarting is enough — no
+rebuild. To adjust the roster, branding, or grounding, edit `config/scenario.json` (or re-run the
+**Scenario Architect** agent, `.github/agents/scenario-architect.agent.md`).
 
 ### 2. Provision Azure (Bicep via `azd`)
 
