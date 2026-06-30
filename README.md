@@ -163,6 +163,41 @@ src/
 - **Vocabulary**: the framework's domain language (Dossier / Deliberation / Assessment / Nexus /
   Council) is fixed in code; use your scenario's own words in prompts and sample documents.
 
+## Content safety (RAI policy)
+
+Every chat model deployment is bound to a custom content-safety policy
+(`Microsoft.CognitiveServices/accounts/raiPolicies`, in `infra/`). Thresholds default to `Medium` for
+all four harm categories (identical to `Microsoft.Default`), and the Foundry agents inherit the policy
+because they run on the bound deployments.
+
+**This scenario relaxes Violence to `High`.** The council debates fictional Patriot plans in character,
+which the default `medium` violence filter blocks on the model's *completions* — failing deliberations.
+Blocking only at `High` (Low/Medium pass) keeps runs flowing. It is set as an `azd` env override — no
+Bicep edits:
+
+```bash
+azd env set COUNCIL_CONTENT_VIOLENCE_THRESHOLD High
+azd provision
+```
+
+> `.azure/` is machine-local and gitignored, so this override does **not** travel with the repo — run the
+> `azd env set` on any new machine/environment before `azd provision` (or change the default in
+> `infra/main.parameters.json`).
+
+Overridable env vars (`Low` | `Medium` | `High`, default `Medium`): `COUNCIL_CONTENT_HATE_THRESHOLD`,
+`COUNCIL_CONTENT_SEXUAL_THRESHOLD`, `COUNCIL_CONTENT_VIOLENCE_THRESHOLD`,
+`COUNCIL_CONTENT_SELFHARM_THRESHOLD` (plus `COUNCIL_CONTENT_POLICY_NAME` to rename the policy). A higher
+threshold blocks **less**.
+
+**No approval is needed to raise a threshold.** Adjusting severity thresholds (Low/Medium/High),
+separately for prompts and completions, is available to all customers. Approval (Azure OpenAI *modified
+content filters*, managed customers only) is required **only** to turn a category fully **off** or to
+**Annotate-only** — not to change a threshold. See
+[Configure content filters](https://learn.microsoft.com/azure/ai-foundry/openai/how-to/content-filters).
+
+If a turn is still blocked, the engine degrades gracefully: the block becomes a **Defer** assessment
+whose Chair Summary explains it, rather than failing the whole deliberation.
+
 ## Conventions
 
 - **.NET 10**, C# 13 idioms (records, primary constructors, file-scoped namespaces).
