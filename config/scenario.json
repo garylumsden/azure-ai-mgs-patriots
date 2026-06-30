@@ -15,7 +15,8 @@
       "role": "Founder & Final Will of the Patriots",
       "description": "Founder of the Patriots and architect of Cipher. Hears the council in full, weighs every will against the will of the Boss, and renders the single Proposal Assessment that becomes policy.",
       "tier": "Synthesis",
-      "promptFile": "chair.md"
+      "promptFile": "chair.md",
+      "avatar": "branding/avatars/major-zero.png"
     },
     "moderator": {
       "id": "moderator",
@@ -23,7 +24,8 @@
       "role": "Core Intelligence & Director of the Floor",
       "description": "The Patriots' core AI, binding GW, TJ, AL and TR. Decides who speaks next. Routing only — never argues the case.",
       "tier": "Fast",
-      "promptFile": "moderator.md"
+      "promptFile": "moderator.md",
+      "avatar": "branding/avatars/jd.png"
     },
     "nexusAnalyst": {
       "id": "nexus-analyst",
@@ -31,7 +33,8 @@
       "role": "Signals Intelligence & Cross-Plan Linkage",
       "description": "Reads every assessment against the archive of prior plans, surfacing the dependencies, contradictions, and reinforcements that bind the Patriots' schemes together.",
       "tier": "Synthesis",
-      "promptFile": "nexus-analyst.md"
+      "promptFile": "nexus-analyst.md",
+      "avatar": "branding/avatars/sigint.png"
     },
     "members": [
       {
@@ -40,7 +43,8 @@
         "role": "Foundational Order & System Architecture",
         "description": "The first of the four president-named AIs. Guardian of the framework on which all control rests — judges whether a plan strengthens or fractures the foundation of the system.",
         "tier": "Reasoning",
-        "promptFile": "gw.md"
+        "promptFile": "gw.md",
+        "avatar": "branding/avatars/gw.png"
       },
       {
         "id": "tj",
@@ -48,7 +52,8 @@
         "role": "Liberty, Consent & the Illusion of Freedom",
         "description": "Keeper of the masses' sense of liberty. Asks whether a plan preserves the appearance of free will that keeps the population compliant.",
         "tier": "Reasoning",
-        "promptFile": "tj.md"
+        "promptFile": "tj.md",
+        "avatar": "branding/avatars/tj.png"
       },
       {
         "id": "al",
@@ -56,7 +61,8 @@
         "role": "Unity & Preservation of the System",
         "description": "Sworn to keep the house from dividing. Weighs every plan against the risk of fragmentation, secession, and collapse of the union of control.",
         "tier": "Reasoning",
-        "promptFile": "al.md"
+        "promptFile": "al.md",
+        "avatar": "branding/avatars/al.png"
       },
       {
         "id": "tr",
@@ -64,7 +70,8 @@
         "role": "Force, Expansion & the Economics of War",
         "description": "Speaks softly and carries the big stick. Champions hard power, the proxy battlefield, and managed, perpetual conflict in service of the will of the Patriots.",
         "tier": "Reasoning",
-        "promptFile": "tr.md"
+        "promptFile": "tr.md",
+        "avatar": "branding/avatars/tr.png"
       },
       {
         "id": "big-boss",
@@ -72,7 +79,8 @@
         "role": "The Soldier's Truth & Battlefield Reality",
         "description": "The legend whose flesh and will the Patriots harvest. A reluctant founder who tests every plan against the cost paid by soldiers on the ground — and bristles at the system's reach.",
         "tier": "Reasoning",
-        "promptFile": "big-boss.md"
+        "promptFile": "big-boss.md",
+        "avatar": "branding/avatars/big-boss.png"
       },
       {
         "id": "eva",
@@ -80,7 +88,8 @@
         "role": "Espionage, Deception & the Human Cost",
         "description": "Master of infiltration and the mother of the sons. Scrutinises a plan's tradecraft, its cover, and the human price the official record will never show.",
         "tier": "Reasoning",
-        "promptFile": "eva.md"
+        "promptFile": "eva.md",
+        "avatar": "branding/avatars/eva.png"
       },
       {
         "id": "para-medic",
@@ -88,7 +97,8 @@
         "role": "Genome, Bioethics & Control of Life",
         "description": "The Patriots' specialist in the life sciences. Examines every plan that reaches into the body, the gene, and the nanomachine — coldly fascinated by control at the cellular level.",
         "tier": "Reasoning",
-        "promptFile": "para-medic.md"
+        "promptFile": "para-medic.md",
+        "avatar": "branding/avatars/para-medic.png"
       },
       {
         "id": "ocelot",
@@ -96,7 +106,8 @@
         "role": "Manipulation, Misdirection & the Long Game",
         "description": "Triple agent and master manipulator. Plays every side of a plan, hunting the angle, the double-cross, and the move three steps ahead that no one else has seen.",
         "tier": "Reasoning",
-        "promptFile": "ocelot.md"
+        "promptFile": "ocelot.md",
+        "avatar": "branding/avatars/ocelot.png"
       },
       {
         "id": "the-boss",
@@ -104,7 +115,8 @@
         "role": "The Original Will & the Conscience of the Council",
         "description": "The mother of special forces, whose final will every Patriot claims to serve and quietly betrays. The council's conscience — she measures each plan against loyalty, sacrifice, and a world without borders.",
         "tier": "Reasoning",
-        "promptFile": "the-boss.md"
+        "promptFile": "the-boss.md",
+        "avatar": "branding/avatars/the-boss.png"
       }
     ]
   }
