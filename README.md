@@ -157,9 +157,15 @@ src/
 
 ## Customising further
 
-- **Branding / look & feel**: the dark "council chamber" theme lives in `wwwroot/app.css` (CSS custom
-  properties). Branding strings + emblem come from `config/scenario.json`; the theme is shared by
-  default. Drop an SVG/PNG in `wwwroot/branding/` and point `emblem` at it.
+- **Branding / look & feel**: the dark **Metal Gear Solid codec / tactical-HUD** theme lives in
+  `wwwroot/app.css` (CSS custom properties — see `docs/DESIGN.md`). Branding strings + emblem come from
+  `config/scenario.json`; the theme is shared by default. Drop an SVG/PNG in `wwwroot/branding/` and
+  point `emblem` at it.
+- **Typography (self-hosted MGS fonts)**: chrome uses authentic fan-made MGS faces from
+  `wwwroot/fonts/mgs/` (long prose stays in a legible system face). **Attribution is required and shown
+  in the app footer on every page:** the dafont *"Metal Gear Solid"* font pack by Steve Snape (Solid
+  Snake's Game Shrine), and *MGS1 Fonts © 2025 Andrew Gleeson*, licensed
+  [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Do not remove the footer strip.
 - **Vocabulary**: the framework's domain language (Dossier / Deliberation / Assessment / Nexus /
   Council) is fixed in code; use your scenario's own words in prompts and sample documents.
 

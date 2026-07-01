@@ -7,12 +7,12 @@ window.nexusGraph = {
     isFiltered: false,
 
     colorMap: {
-        'Implication': '#6ea8fe',
-        'Contradiction': '#ff6b6b',
-        'Dependency': '#f4a93a',
-        'Supersession': '#b69cff',
-        'Reinforcement': '#3ddc97',
-        'Tension': '#f4c542'
+        'Implication': '#37e08a',
+        'Contradiction': '#ff5a52',
+        'Dependency': '#ffb02e',
+        'Supersession': '#9fb0a6',
+        'Reinforcement': '#8fe0b0',
+        'Tension': '#ff8a3c'
     },
 
     init: function (containerId, nodes, edges, dotNetRef) {
@@ -35,14 +35,14 @@ window.nexusGraph = {
                     style: {
                         'label': 'data(label)', 'text-wrap': 'wrap', 'text-max-width': '120px',
                         'font-size': '11px', 'text-valign': 'center', 'text-halign': 'center',
-                        'background-color': '#1b2a4a', 'border-color': '#3a4d7e', 'border-width': 2,
-                        'width': 140, 'height': 50, 'shape': 'round-rectangle', 'color': '#e8eefc'
+                        'background-color': '#132019', 'border-color': '#3a7a52', 'border-width': 2,
+                        'width': 140, 'height': 50, 'shape': 'round-rectangle', 'color': '#d7f5e4'
                     }
                 },
                 {
                     selector: 'edge',
                     style: {
-                        'label': 'data(label)', 'font-size': '9px', 'color': '#9fb2d6',
+                        'label': 'data(label)', 'font-size': '9px', 'color': '#8fc7a6',
                         'text-rotation': 'autorotate', 'text-margin-y': -10, 'width': 2,
                         'line-color': 'data(color)', 'target-arrow-color': 'data(color)',
                         'target-arrow-shape': 'triangle', 'curve-style': 'bezier', 'arrow-scale': 1.2
@@ -58,7 +58,7 @@ window.nexusGraph = {
                 },
                 {
                     selector: 'node.highlighted',
-                    style: { 'border-color': '#6ea8fe', 'border-width': 3, 'background-color': '#22356a' }
+                    style: { 'border-color': '#37e08a', 'border-width': 3, 'background-color': '#1a2e22' }
                 },
                 {
                     selector: 'edge.highlighted',
@@ -101,7 +101,7 @@ window.nexusGraph = {
         var self = this;
         return {
             nodes: nodes.map(function (n) { return { data: { id: n.id, label: n.label, recommendation: n.recommendation } }; }),
-            edges: edges.map(function (e) { return { data: { id: e.id, source: e.source, target: e.target, label: e.nexusType, nexusType: e.nexusType, color: self.colorMap[e.nexusType] || '#667085' } }; })
+            edges: edges.map(function (e) { return { data: { id: e.id, source: e.source, target: e.target, label: e.nexusType, nexusType: e.nexusType, color: self.colorMap[e.nexusType] || '#9fb0a6' } }; })
         };
     },
 

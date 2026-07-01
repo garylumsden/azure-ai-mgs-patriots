@@ -1,19 +1,20 @@
-/* === Agent Council — Debating Chamber === */
-/* Parliament-style hemicycle: seats in an arc, Chair at the podium,
-   hands raised to bid, push-to-talk mics light up for the active speaker. */
+/* === The Patriots Council — Debating Chamber (MGS codec / tactical-HUD skin) === */
+/* Parliament-style hemicycle rendered as a codec uplink: seats in an arc, Chair at the podium,
+   hands raised to bid, push-to-talk mics light up green for the active speaker. All colours are
+   token-driven (see docs/DESIGN.md). ON AIR = red, live round = amber, active speaker = green. */
 
 .debate-stage {
     position: relative;
-    background: radial-gradient(ellipse at 50% 100%, #1b2a4a 0%, #0d1830 60%, #070d1c 100%);
-    border: 1px solid #0a1428;
-    border-radius: 14px;
+    background: radial-gradient(ellipse at 50% 100%, var(--gc-surface-2) 0%, var(--gc-bg-elevated) 60%, var(--gc-bg) 100%);
+    border: 1px solid var(--gc-border-strong);
+    border-radius: var(--gc-radius-card);
     padding: 1rem;
-    color: #e8eefc;
+    color: var(--gc-text);
     overflow: visible;
     box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.55);
 }
 
-/* "On Air" televised banner */
+/* Top HUD strip */
 .debate-phasebar {
     display: flex;
     align-items: center;
@@ -23,41 +24,57 @@
     margin-bottom: 0.5rem;
 }
 
+/* Frequency readout — codec uplink motif (e.g. 140.85) */
+.debate-freq {
+    font-family: var(--font-ammo);
+    letter-spacing: 0.06em;
+    color: var(--gc-text-soft);
+    font-size: 0.95rem;
+}
+
 .debate-onair {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-family: var(--font-hud);
+    font-weight: 400;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     font-size: 0.75rem;
-    color: #ff5a5a;
+    color: var(--gc-danger);
 }
 
 .debate-onair .dot {
     width: 0.6rem;
     height: 0.6rem;
     border-radius: 50%;
-    background: #ff3b3b;
-    box-shadow: 0 0 8px 2px rgba(255, 59, 59, 0.8);
+    background: var(--gc-danger);
+    box-shadow: 0 0 8px 2px rgba(255, 90, 82, 0.8);
     animation: onair-blink 1.4s infinite;
 }
 
 .debate-phase-pill {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 999px;
+    background: var(--gc-surface-2);
+    border: 1px solid var(--gc-border-strong);
+    border-radius: var(--gc-radius);
     padding: 0.25rem 0.9rem;
-    font-weight: 600;
-    font-size: 0.95rem;
+    font-family: var(--font-hud);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: var(--gc-text);
 }
 
 .debate-round-pill {
-    background: #f4c542;
-    color: #2a2200;
-    border-radius: 999px;
+    background: var(--gc-gold);
+    color: #2a1400;
+    border-radius: var(--gc-radius);
     padding: 0.25rem 0.9rem;
-    font-weight: 700;
+    font-family: var(--font-hud);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 400;
     font-size: 0.85rem;
 }
 
@@ -97,43 +114,116 @@
     font-weight: 700;
     font-size: 1.05rem;
     color: #fff;
-    border: 2px solid rgba(255, 255, 255, 0.65);
+    border: 2px solid var(--gc-border-strong);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
     position: relative;
 }
 
 .seat.speaking .avatar {
-    box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.45), 0 0 22px 6px rgba(46, 204, 113, 0.6);
+    border-color: var(--gc-accent);
+    box-shadow: 0 0 0 4px rgba(55, 224, 138, 0.45), 0 0 22px 6px rgba(55, 224, 138, 0.6);
 }
 
-/* Persona avatar image fills the coloured circle (used in seats, podium, roll-call and transcript). */
+/* Persona avatar image — rendered as an MGS1 green-codec monochrome portrait (duotone via filter). */
 .avatar-img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
     display: block;
+    filter: grayscale(1) sepia(1) hue-rotate(95deg) saturate(2.2) brightness(1.06) contrast(1.05);
+}
+
+/* Active speaker burns brighter on the codec screen. */
+.seat.speaking .avatar-img,
+.seat.mic-live .avatar-img {
+    filter: grayscale(1) sepia(1) hue-rotate(95deg) saturate(2.6) brightness(1.28) contrast(1.08);
+}
+
+/* === Codec PIP portrait overlay — applied to EVERY avatar (decorative, image-agnostic) ===
+   A transparent CRT skin: fine scanlines + a green phosphor vignette sit above the portrait,
+   giving new images the classic MGS codec-screen look. The active speaker gets a scan sweep. */
+.avatar {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--gc-border-strong);
+    border-radius: 50%;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.avatar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 1.5px,
+            rgba(0, 22, 11, 0.30) 2px,
+            rgba(0, 22, 11, 0.30) 3px),
+        radial-gradient(ellipse at 50% 32%,
+            rgba(55, 224, 138, 0.12) 0%,
+            rgba(0, 0, 0, 0) 58%,
+            rgba(0, 0, 0, 0.34) 100%);
+    mix-blend-mode: multiply;
+}
+
+/* Active-speaker codec scan sweep — a bright phosphor line travelling down the portrait. */
+.seat.speaking .avatar::before,
+.seat.mic-live .avatar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(
+        to bottom,
+        rgba(55, 224, 138, 0) 0%,
+        rgba(55, 224, 138, 0.55) 48%,
+        rgba(55, 224, 138, 0) 60%);
+    background-size: 100% 220%;
+    background-repeat: no-repeat;
+    animation: codec-scan 2.2s linear infinite;
+    mix-blend-mode: screen;
+}
+
+@keyframes codec-scan {
+    0%   { background-position: 0 -120%; }
+    100% { background-position: 0 120%; }
 }
 
 .seat .plaque {
     margin-top: 0.3rem;
-    background: rgba(255, 255, 255, 0.92);
-    color: #14233f;
-    border-radius: 5px;
-    padding: 0.15rem 0.35rem;
+    background: var(--gc-surface);
+    color: var(--gc-text);
+    border: 1px solid var(--gc-border);
+    border-radius: var(--gc-radius);
+    padding: 0.15rem 0.4rem;
     line-height: 1.1;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .seat .plaque .name {
-    font-weight: 700;
+    font-family: var(--font-hud);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 400;
     font-size: 0.72rem;
+    color: var(--gc-text);
     display: block;
 }
 
 .seat .plaque .role {
     font-size: 0.6rem;
-    color: #51607a;
+    color: var(--gc-text-soft);
     display: block;
 }
 
@@ -168,10 +258,10 @@
     white-space: normal;
     overflow-wrap: anywhere;
     text-align: left;
-    background: #14233f;
-    color: #f1f5f9;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 8px;
+    background: var(--gc-surface);
+    color: var(--gc-text);
+    border: 1px solid var(--gc-border-strong);
+    border-radius: var(--gc-radius);
     padding: 0.45rem 0.6rem;
     font-size: 0.78rem;
     line-height: 1.3;
@@ -199,14 +289,14 @@
 .seat .mic {
     margin-top: 0.25rem;
     font-size: 0.95rem;
-    color: #6b7a96;
+    color: var(--gc-text-soft);
     transition: color 0.25s ease, text-shadow 0.25s ease;
     line-height: 1;
 }
 
 .seat.mic-live .mic {
-    color: #2ecc71;
-    text-shadow: 0 0 8px rgba(46, 204, 113, 0.9);
+    color: var(--gc-accent);
+    text-shadow: 0 0 8px rgba(55, 224, 138, 0.9);
     animation: mic-pulse 1.2s ease-in-out infinite;
 }
 
@@ -233,15 +323,15 @@
 }
 
 .podium.speaking {
-    filter: drop-shadow(0 0 12px rgba(46, 204, 113, 0.7));
+    filter: drop-shadow(0 0 12px rgba(55, 224, 138, 0.7));
 }
 
 .podium-base {
     margin-top: 0.2rem;
     width: 120px;
     height: 16px;
-    background: linear-gradient(#caa64a, #8a6d22);
-    border-radius: 4px 4px 8px 8px;
+    background: linear-gradient(var(--gc-gold), #9a6a1a);
+    border-radius: var(--gc-radius) var(--gc-radius) 8px 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -254,10 +344,10 @@
 }
 
 .citation-chip {
-    background: #eef3ff;
-    border: 1px solid #c7d6f5;
-    color: #1a5fb4;
-    border-radius: 999px;
+    background: var(--gc-surface-2);
+    border: 1px solid var(--gc-border);
+    color: var(--gc-accent);
+    border-radius: var(--gc-radius);
     padding: 0.2rem 0.7rem;
     font-size: 0.78rem;
     text-decoration: none;
@@ -268,11 +358,11 @@
 }
 
 .citation-chip:hover {
-    background: #dde8ff;
+    background: var(--gc-surface);
     text-decoration: underline;
 }
 
-/* Scrolling transcript — accumulating chat-style record of speaker turns */
+/* Scrolling transcript — accumulating codec-style record of speaker turns (dark codec panels) */
 .transcript {
     margin-top: 0.5rem;
     max-height: 360px;
@@ -284,20 +374,24 @@
 }
 
 .transcript .turn {
-    background: #ffffff;
-    color: #14233f;
-    border-radius: 12px;
+    background: var(--gc-surface);
+    color: var(--gc-text);
+    border-radius: var(--gc-radius-card);
     padding: 0.7rem 0.9rem;
     position: relative;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
-    border-left: 5px solid #c7d0df;
+    border-left: 5px solid var(--gc-border);
 }
 
 .transcript .turn.speaking {
-    border-left-color: #2ecc71;
+    border-left-color: var(--gc-accent);
 }
 
 .transcript .turn-head {
+    font-family: var(--font-codec);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gc-accent);
     font-weight: 700;
     margin-bottom: 0.25rem;
     display: flex;
@@ -306,11 +400,18 @@
 }
 
 .transcript .turn-role {
+    font-family: var(--font-body);
+    text-transform: none;
+    letter-spacing: normal;
     font-weight: 400;
+    color: var(--gc-text-soft);
 }
 
+/* Assessment / speaker prose stays in the legible body face — never an MGS bitmap face. */
 .transcript .turn-body {
+    font-family: var(--font-body);
     font-size: 0.92rem;
+    color: var(--gc-text);
 }
 
 .transcript .turn-body :last-child {
@@ -321,17 +422,19 @@
     display: inline-block;
     width: 8px;
     height: 1.05em;
-    background: #2ecc71;
+    background: var(--gc-accent);
     margin-left: 2px;
     vertical-align: text-bottom;
     animation: caret-blink 0.9s step-end infinite;
 }
 
 .conclusion-banner {
-    background: linear-gradient(90deg, #1a5fb4, #2e7d32);
-    border-radius: 10px;
+    background: var(--gc-surface-2);
+    border-left: 4px solid var(--gc-accent);
+    border-radius: var(--gc-radius);
     padding: 0.75rem 1rem;
     margin-top: 0.75rem;
+    color: var(--gc-text);
     font-weight: 600;
 }
 
@@ -341,26 +444,28 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 0.5rem 0.75rem;
-    border-radius: 10px;
+    border-radius: var(--gc-radius);
     padding: 0.55rem 0.9rem;
     margin-bottom: 0.5rem;
-    color: #fff;
+    color: var(--gc-text);
     font-size: 0.95rem;
-    border-left: 4px solid rgba(255, 255, 255, 0.55);
+    border-left: 4px solid var(--gc-border-strong);
 }
 
 .moderator-banner.calling {
-    background: linear-gradient(90deg, #5b3b8c, #7c4dbd);
+    background: rgba(255, 176, 46, 0.12);
+    border-left-color: var(--gc-gold);
     animation: moderator-pulse 1.6s ease-in-out infinite;
 }
 
 .moderator-banner.selected {
-    background: linear-gradient(90deg, #1a5fb4, #2563eb);
+    background: rgba(55, 224, 138, 0.12);
+    border-left-color: var(--gc-accent);
 }
 
 .moderator-banner .hands-count {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 999px;
+    background: var(--gc-surface-2);
+    border-radius: var(--gc-radius);
     padding: 0.1rem 0.6rem;
     font-size: 0.82rem;
     font-weight: 600;
@@ -368,8 +473,8 @@
 }
 
 @keyframes moderator-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(124, 77, 189, 0.45); }
-    50% { box-shadow: 0 0 0 6px rgba(124, 77, 189, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 176, 46, 0.45); }
+    50% { box-shadow: 0 0 0 6px rgba(255, 176, 46, 0); }
 }
 
 /* Independent Assessment roll-call — every member forms a position in parallel */
@@ -381,22 +486,22 @@
 }
 
 .rc-card {
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-left: 3px solid rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
+    background: var(--gc-surface);
+    border: 1px solid var(--gc-border);
+    border-left: 3px solid var(--gc-border-strong);
+    border-radius: var(--gc-radius);
     padding: 0.55rem 0.7rem;
     transition: border-color 0.3s ease, background 0.3s ease;
 }
 
 .rc-card.assessing {
-    border-left-color: #7c4dbd;
-    background: rgba(124, 77, 189, 0.12);
+    border-left-color: var(--gc-gold);
+    background: rgba(255, 176, 46, 0.12);
 }
 
 .rc-card.done {
-    border-left-color: #2e9e5b;
-    background: rgba(46, 158, 91, 0.12);
+    border-left-color: var(--gc-accent);
+    background: rgba(55, 224, 138, 0.12);
 }
 
 .rc-head {
@@ -407,26 +512,30 @@
 }
 
 .rc-name {
-    font-weight: 600;
-    font-size: 0.9rem;
+    font-family: var(--font-hud);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 400;
+    font-size: 0.85rem;
     flex: 1;
-    color: rgba(255, 255, 255, 0.95);
+    color: var(--gc-text);
 }
 
 .rc-tick {
-    color: #4ade80;
+    color: var(--gc-accent);
     font-weight: 700;
 }
 
 .rc-body {
+    font-family: var(--font-body);
     font-size: 0.85rem;
     line-height: 1.35;
-    color: rgba(255, 255, 255, 0.95);
+    color: var(--gc-text-muted);
 }
 
-/* Initial-position preview — readable muted tone (never Bootstrap text-muted on dark cards) */
+/* Initial-position preview — readable muted tone */
 .rc-preview {
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--gc-text-soft);
 }
 
 /* Persistent initial-positions strip — compact one-sentence summaries that remain
@@ -438,20 +547,21 @@
     gap: 0.4rem;
     margin-top: 0.5rem;
     padding: 0.4rem 0.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 10px;
+    background: var(--gc-surface);
+    border: 1px solid var(--gc-border);
+    border-radius: var(--gc-radius);
     max-height: 9rem;
     overflow-y: auto;
 }
 
 .positions-strip .ps-label {
     align-self: center;
+    font-family: var(--font-hud);
     font-size: 0.62rem;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--gc-text-soft);
     padding: 0 0.3rem;
     white-space: nowrap;
 }
@@ -463,10 +573,10 @@
     flex: 1 1 220px;
     min-width: 180px;
     max-width: 320px;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-left: 3px solid #2e9e5b;
-    border-radius: 8px;
+    background: var(--gc-surface-2);
+    border: 1px solid var(--gc-border);
+    border-left: 3px solid var(--gc-accent);
+    border-radius: var(--gc-radius);
     padding: 0.35rem 0.5rem;
 }
 
@@ -492,29 +602,30 @@
 .ps-chip .ps-name {
     font-size: 0.72rem;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.92);
+    color: var(--gc-text);
     line-height: 1.2;
 }
 
 .ps-chip .ps-sum {
+    font-family: var(--font-body);
     font-size: 0.72rem;
     line-height: 1.25;
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--gc-text-muted);
 }
 
 /* Roll-call: assessment finished but member tabled no position (server-side JSON failed) */
 .rc-card.failed {
-    border-left-color: #d9a429;
-    background: rgba(217, 164, 41, 0.1);
+    border-left-color: var(--gc-warning);
+    background: rgba(255, 176, 46, 0.1);
 }
 
 .rc-card.blocked {
-    border-left-color: #c0392b;
-    background: rgba(192, 57, 43, 0.12);
+    border-left-color: var(--gc-danger);
+    background: rgba(255, 90, 82, 0.12);
 }
 
 .rc-warn {
-    color: #f0b441;
+    color: var(--gc-warning);
     font-weight: 700;
 }
 
@@ -544,7 +655,7 @@
     margin-left: auto;
     align-self: center;
     font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--gc-text-soft);
     cursor: pointer;
     transition: transform 0.2s ease;
 }
@@ -555,20 +666,21 @@
 
 /* Missing/failed position chip — amber warning instead of green */
 .ps-chip.missing {
-    border-left-color: #d9a429;
-    background: rgba(217, 164, 41, 0.08);
+    border-left-color: var(--gc-warning);
+    background: rgba(255, 176, 46, 0.08);
 }
 
 .ps-chip .ps-missing-note {
-    color: rgba(240, 180, 65, 0.9);
+    color: var(--gc-warning);
     font-style: italic;
 }
 
 .ps-detail {
+    font-family: var(--font-body);
     font-size: 0.74rem;
     line-height: 1.4;
-    color: rgba(255, 255, 255, 0.85);
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--gc-text-muted);
+    border-top: 1px solid var(--gc-border);
     padding-top: 0.35rem;
     max-height: 16rem;
     overflow-y: auto;
@@ -583,14 +695,14 @@
     margin: 0.3rem 0 0.2rem;
 }
 
-/* Seat "thinking" pulse while a member forms its initial position */
+/* Seat "thinking" pulse while a member forms its initial position (amber = CAUTION/working) */
 .seat.assessing .avatar {
     animation: assessing-pulse 1.4s ease-in-out infinite;
 }
 
 @keyframes assessing-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(124, 77, 189, 0.5); }
-    50% { box-shadow: 0 0 0 7px rgba(124, 77, 189, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 176, 46, 0.5); }
+    50% { box-shadow: 0 0 0 7px rgba(255, 176, 46, 0); }
 }
 
 /* Blinking "ON AIR" */
@@ -605,8 +717,8 @@
 }
 
 @keyframes mic-pulse {
-    0%, 100% { text-shadow: 0 0 6px rgba(46, 204, 113, 0.7); }
-    50% { text-shadow: 0 0 14px rgba(46, 204, 113, 1); }
+    0%, 100% { text-shadow: 0 0 6px rgba(55, 224, 138, 0.7); }
+    50% { text-shadow: 0 0 14px rgba(55, 224, 138, 1); }
 }
 
 @keyframes caret-blink {
@@ -620,6 +732,8 @@
     .seat.hand-up .hand,
     .seat.mic-live .mic,
     .seat.assessing .avatar,
+    .seat.speaking .avatar::before,
+    .seat.mic-live .avatar::before,
     .moderator-banner.calling,
     .transcript .caret {
         animation: none !important;

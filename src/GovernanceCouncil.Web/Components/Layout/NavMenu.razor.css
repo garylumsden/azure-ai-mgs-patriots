@@ -11,17 +11,21 @@
 .gc-brand-emblem-img { width: 1.6rem; height: 1.6rem; display: block; object-fit: contain; }
 .gc-brand-text { display: flex; flex-direction: column; line-height: 1.1; }
 .gc-brand-eyebrow {
-    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.16em;
+    font-family: var(--font-tactical);
+    font-size: 0.62rem; font-weight: 400; letter-spacing: 0.18em;
     text-transform: uppercase; color: var(--gc-text-soft);
 }
 .gc-brand-name {
-    font-size: 1.02rem; font-weight: 600; color: var(--gc-text);
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600; color: var(--gc-text);
+    text-transform: uppercase; letter-spacing: 0.04em;
     text-decoration: none;
 }
 .gc-brand-name:hover { color: var(--gc-accent-hover); text-decoration: none; }
 
 .gc-nav-section {
-    font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em;
+    font-family: var(--font-hud);
+    font-size: 0.66rem; font-weight: 400; letter-spacing: 0.12em;
     text-transform: uppercase; color: var(--gc-text-soft);
     padding: 1rem 1.4rem 0.35rem;
 }
@@ -49,6 +53,7 @@
     border-left: 3px solid transparent; border-radius: 8px;
     height: 2.65rem; display: flex; align-items: center; gap: 0.7rem; padding: 0 0.85rem;
     width: 100%;
+    font-family: var(--font-hud); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.82rem;
 }
 .nav-item ::deep .gc-nav-ic { flex: 0 0 auto; }
 .nav-item ::deep a.active {

@@ -1,16 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="The Patriots Council emblem">
   <!-- Original emblem: an all-seeing eye ringed by twelve stars (the Wisemen's Committee). -->
-  <!-- Not a reproduction of any Konami/Metal Gear trademark. Accent: #6ea8fe. -->
-  <g stroke="#6ea8fe" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Not a reproduction of any Konami/Metal Gear trademark. Accent: #37e08a. -->
+  <g stroke="#37e08a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
     <!-- Eye lens -->
     <path d="M14 32 Q32 17 50 32 Q32 47 14 32 Z" fill="none"/>
     <!-- Iris -->
     <circle cx="32" cy="32" r="7.2" fill="none"/>
   </g>
   <!-- Pupil -->
-  <circle cx="32" cy="32" r="3.2" fill="#6ea8fe"/>
+  <circle cx="32" cy="32" r="3.2" fill="#37e08a"/>
   <!-- Twelve stars / committee seats -->
-  <g fill="#6ea8fe">
+  <g fill="#37e08a">
     <circle cx="32"   cy="8"    r="1.9"/>
     <circle cx="44"   cy="11.2" r="1.9"/>
     <circle cx="52.8" cy="20"   r="1.9"/>

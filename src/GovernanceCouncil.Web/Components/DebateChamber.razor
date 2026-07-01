@@ -6,7 +6,7 @@
 @* Parliament-style debating chamber. Pure presentation: all state is supplied by the
    parent (LiveDeliberation.razor), which owns the SignalR connection. *@
 
-<div class="debate-stage">
+<div class="debate-stage hud-frame codec-crt">
     <div class="debate-phasebar">
         <span class="debate-onair" aria-label="Live debate in progress">
             <span class="dot" aria-hidden="true"></span> On Air
@@ -14,6 +14,7 @@
         <span class="debate-phase-pill" role="status" aria-live="polite">
             @(string.IsNullOrWhiteSpace(Phase) ? "Convening" : Phase)
         </span>
+        <span class="debate-freq" aria-hidden="true">140.85</span>
         @if (MaxRounds > 0)
         {
             <span class="debate-round-pill" aria-label="@($"Round {Round} of {MaxRounds}")">
