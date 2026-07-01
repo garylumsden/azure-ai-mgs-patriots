@@ -27,6 +27,18 @@ public sealed class RaiPolicyManager
 
     private static readonly string[] Allowed = ["Low", "Medium", "High"];
 
+    /// <summary>
+    /// Data-plane settle after the control plane confirms the new threshold: model deployments take
+    /// additional time to actually <b>enforce</b> the updated RAI policy, so we wait before the council
+    /// runs (otherwise the debate can start before content safety has kicked in). Tunable via
+    /// <c>COUNCIL_RAI_PROPAGATION_SECONDS</c> (default 30).
+    /// </summary>
+    private static TimeSpan PropagationSettle =>
+        TimeSpan.FromSeconds(
+            int.TryParse(Environment.GetEnvironmentVariable("COUNCIL_RAI_PROPAGATION_SECONDS"), out var s) && s >= 0
+                ? s
+                : 30);
+
     private readonly TokenCredential _credential;
     private readonly HttpClient _http;
     private readonly ILogger<RaiPolicyManager> _logger;
@@ -78,14 +90,15 @@ public sealed class RaiPolicyManager
             await PutPolicyAsync(url, token, current, ct);
             _logger.LogInformation("Content-safety toggle: threshold set to '{Target}'. Waiting for propagation…", target);
 
-            // Poll until the control plane reflects the change, then a short settle for the data plane.
+            // Poll until the control plane reflects the change, then settle for the data plane so the
+            // deployments actually enforce it before the council convenes (COUNCIL_RAI_PROPAGATION_SECONDS).
             for (var i = 0; i < 6; i++)
             {
                 await Task.Delay(TimeSpan.FromSeconds(2), ct);
                 var check = await GetPolicyAsync(url, token, ct);
                 if (check is not null && string.Equals(CurrentViolence(check), target, StringComparison.OrdinalIgnoreCase))
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(2), ct);
+                    await Task.Delay(PropagationSettle, ct);
                     return;
                 }
             }

@@ -8,19 +8,23 @@
 
 <div class="debate-stage hud-frame codec-crt">
     <div class="debate-phasebar">
-        <span class="debate-onair" aria-label="Live debate in progress">
-            <span class="dot" aria-hidden="true"></span> On Air
-        </span>
+        <div class="debate-phasebar-left">
+            <span class="debate-onair" aria-label="Live debate in progress">
+                <span class="dot" aria-hidden="true"></span> On Air
+            </span>
+        </div>
         <span class="debate-phase-pill" role="status" aria-live="polite">
             @(string.IsNullOrWhiteSpace(Phase) ? "Convening" : Phase)
         </span>
-        <span class="debate-freq" aria-hidden="true">140.85</span>
-        @if (MaxRounds > 0)
-        {
-            <span class="debate-round-pill" aria-label="@($"Round {Round} of {MaxRounds}")">
-                Round @Round of @MaxRounds
-            </span>
-        }
+        <div class="debate-phasebar-right">
+            <span class="debate-freq" aria-hidden="true">140.85</span>
+            @if (MaxRounds > 0)
+            {
+                <span class="debate-round-pill" aria-label="@($"Round {Round} of {MaxRounds}")">
+                    Round @Round of @MaxRounds
+                </span>
+            }
+        </div>
     </div>
 
     <div class="hemicycle">
@@ -89,7 +93,7 @@
                 var failed = !done && !blocked && AssessmentConfirmed;
                 <div class="rc-card @(done ? "done" : blocked ? "blocked" : failed ? "failed" : seat.Assessing ? "assessing" : "")">
                     <div class="rc-head">
-                        <span class="avatar" style="width:26px;height:26px;font-size:0.72rem;background:@seat.Colour;border-width:1px;" aria-hidden="true">@AvatarInner(seat.Avatar, seat.Initials)</span>
+                        <span class="avatar" style="width:36px;height:36px;font-size:0.9rem;background:@seat.Colour;border-width:1px;" aria-hidden="true">@AvatarInner(seat.Avatar, seat.Initials)</span>
                         <span class="rc-name">@seat.DisplayName</span>
                         @if (done)
                         {
@@ -131,14 +135,14 @@
         </div>
     }
 
-    @if (Transcript is { Count: > 0 })
+    @if (Transcript is { Count: > 0 } || Moderator is not null)
     {
         <div class="transcript" id="gc-transcript" role="log" aria-live="polite" aria-label="Debate transcript">
             @foreach (var turn in Transcript)
             {
                 <div class="turn @(turn.Speaking ? "speaking" : "")">
                     <div class="turn-head">
-                        <span class="avatar" style="width:26px;height:26px;font-size:0.72rem;background:@turn.Colour;border-width:1px;" aria-hidden="true">@AvatarInner(turn.Avatar, turn.Initials)</span>
+                        <span class="avatar" style="width:36px;height:36px;font-size:0.9rem;background:@turn.Colour;border-width:1px;" aria-hidden="true">@AvatarInner(turn.Avatar, turn.Initials)</span>
                         <span class="turn-name">@turn.DisplayName</span>
                         <span class="turn-role text-muted">· @turn.Role</span>
                     </div>
@@ -207,6 +211,21 @@
                     }
                 </div>
             }
+            @if (Moderator is not null)
+            {
+                <div class="turn moderator-turn @Moderator.Kind">
+                    <div class="turn-head">
+                        <span class="avatar" style="width:36px;height:36px;font-size:0.9rem;background:@Moderator.Colour;border-width:1px;" aria-hidden="true">@AvatarInner(Moderator.Avatar, Moderator.Initials)</span>
+                        <span class="turn-name">@Moderator.Name</span>
+                        <span class="turn-role text-muted">· @Moderator.Role</span>
+                        @if (!string.IsNullOrWhiteSpace(Moderator.Meta))
+                        {
+                            <span class="hands-count">@Moderator.Meta</span>
+                        }
+                    </div>
+                    <div class="turn-body"><em>@Moderator.Message</em></div>
+                </div>
+            }
         </div>
     }
 
@@ -224,6 +243,7 @@
     [Parameter] public int Round { get; set; }
     [Parameter] public int MaxRounds { get; set; }
     [Parameter] public IReadOnlyList<TurnVm> Transcript { get; set; } = Array.Empty<TurnVm>();
+    [Parameter] public ModeratorVm? Moderator { get; set; }
     [Parameter] public string? ConclusionReason { get; set; }
     [Parameter] public bool AssessmentMode { get; set; }
     [Parameter] public bool AssessmentConfirmed { get; set; }
@@ -283,9 +303,11 @@
         var countInRow = perRow[row];
 
         // Outer row is the largest, highest arc; inner rows step inward and slightly down toward the Chair.
-        var rx = 44.0 - row * 13.0;
-        var ry = 58.0 - row * 14.0;
-        var baseTop = 72.0 - row * 3.0;
+        // A deep ellipse: the apex (top-centre) sits high and the ends sweep down almost level with the
+        // Chair, giving adjacent seats enough vertical separation that their captions never overlap.
+        var rx = 47.0 - row * 13.0;
+        var ry = 84.0 - row * 14.0;
+        var baseTop = 92.0 - row * 3.0;
 
         // ~30° between adjacent seats, capped so a full row fans across the chamber. Tiny rows cluster
         // centrally (sweep ≈ 0 for one seat) rather than pinning to the extremes.
@@ -358,5 +380,19 @@
         public int? NexusCount { get; set; }
         public bool Blocked { get; set; }
         public IReadOnlyList<Citation>? Citations { get; set; }
+    }
+
+    // The Moderator's current live announcement, rendered as the newest entry in the transcript
+    // timeline (with the moderator's avatar) rather than a banner above the chamber.
+    public sealed class ModeratorVm
+    {
+        public string? Avatar { get; init; }
+        public string Initials { get; init; } = "";
+        public string Name { get; init; } = "";
+        public string Role { get; init; } = "Moderator";
+        public string Colour { get; init; } = "#3a7a52";
+        public string Message { get; init; } = "";
+        public string? Meta { get; init; }
+        public string Kind { get; init; } = "selected"; // calling | selected
     }
 }

@@ -2,14 +2,16 @@
 
 /* MGS display/chrome faces — self-hosted. Attribution (legally required) in the footer strip:
    dafont "Metal Gear Solid" pack by Steve Snape (Solid Snake's Game Shrine); MGS1 Fonts © 2025
-   Andrew Gleeson, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/). */
-@font-face { font-family:"MGS Logo";     src:url("/fonts/mgs/MetalGearSolid.ttf")          format("truetype"); font-display:swap; }
-@font-face { font-family:"MGS Tactical"; src:url("/fonts/mgs/TacticalEspionageAction.ttf") format("truetype"); font-display:swap; }
-@font-face { font-family:"MGS2 Logo";    src:url("/fonts/mgs/MetalGearSolid2.ttf")         format("truetype"); font-display:swap; }
-@font-face { font-family:"MGS2 Menu";    src:url("/fonts/mgs/MGS2Menu.ttf")                format("truetype"); font-display:swap; }
-@font-face { font-family:"MGS Codec";    src:url("/fonts/mgs/MGS1Codec.ttf")               format("truetype"); font-display:swap; }
-@font-face { font-family:"MGS HUD";      src:url("/fonts/mgs/MGS1HUD.ttf")                 format("truetype"); font-display:swap; }
-@font-face { font-family:"MGS Ammo";     src:url("/fonts/mgs/MGS1Ammo.ttf")                format("truetype"); font-display:swap; }
+   Andrew Gleeson, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/).
+   unicode-range limits these bitmap faces to letters/digits/space — every MGS face maps some
+   punctuation (·, —, -, …, quotes) to blank/box glyphs, so we force those to the legible fallback. */
+@font-face { font-family:"MGS Logo";     src:url("/fonts/mgs/MetalGearSolid.ttf")          format("truetype"); font-display:swap; unicode-range:U+0020,U+0030-0039,U+0041-005A,U+0061-007A; }
+@font-face { font-family:"MGS Tactical"; src:url("/fonts/mgs/TacticalEspionageAction.ttf") format("truetype"); font-display:swap; unicode-range:U+0020,U+0030-0039,U+0041-005A,U+0061-007A; }
+@font-face { font-family:"MGS2 Logo";    src:url("/fonts/mgs/MetalGearSolid2.ttf")         format("truetype"); font-display:swap; unicode-range:U+0020,U+0030-0039,U+0041-005A,U+0061-007A; }
+@font-face { font-family:"MGS2 Menu";    src:url("/fonts/mgs/MGS2Menu.ttf")                format("truetype"); font-display:swap; unicode-range:U+0020,U+0030-0039,U+0041-005A,U+0061-007A; }
+@font-face { font-family:"MGS Codec";    src:url("/fonts/mgs/MGS1Codec.ttf")               format("truetype"); font-display:swap; unicode-range:U+0020,U+0030-0039,U+0041-005A,U+0061-007A; }
+@font-face { font-family:"MGS HUD";      src:url("/fonts/mgs/MGS1HUD.ttf")                 format("truetype"); font-display:swap; unicode-range:U+0020,U+0030-0039,U+0041-005A,U+0061-007A; }
+@font-face { font-family:"MGS Ammo";     src:url("/fonts/mgs/MGS1Ammo.ttf")                format("truetype"); font-display:swap; unicode-range:U+0030-0039; }
 
 :root {
   color-scheme: dark;
@@ -100,11 +102,13 @@ h1, h2, h3, h4 {
   color: var(--gc-text);
   font-family: var(--font-display);
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
 }
-h1 { font-size: 1.6rem; }
-h3 { letter-spacing: 0.03em; }
+h1 { font-size: 1.5rem; line-height: 1.2; }
+h2 { font-size: 1.2rem; line-height: 1.2; }
+h3 { font-size: 1.05rem; }
+h4 { font-size: 0.95rem; }
 .lead { color: var(--gc-text-muted); }
 
 /* eyebrow label — tactical stencil */
@@ -117,15 +121,18 @@ h3 { letter-spacing: 0.03em; }
   color: var(--gc-text-soft);
 }
 
-/* Hero wordmark — the MGS logo face; used at ≥1.6rem only (legibility guard, see docs/DESIGN.md §3) */
+/* Hero wordmark — the MGS logo face; used at ≥1.5rem only (legibility guard, see docs/DESIGN.md §3).
+   Responsive + wrap so the long "THE PATRIOTS COUNCIL" wordmark never overflows its container. */
 .gc-wordmark {
   font-family: var(--font-wordmark);
-  font-size: 2.6rem;
+  font-size: clamp(1.5rem, 4.5vw, 2.6rem);
   line-height: 1.05;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--gc-text);
   font-weight: 400;
+  overflow-wrap: anywhere;
+  max-width: 100%;
 }
 
 /* --- Stance / status pills (token-driven, squared HUD chips) --- */
@@ -182,8 +189,11 @@ h3 { letter-spacing: 0.03em; }
 
 /* --- Markdown prose --- */
 .prose { font-size: 0.92rem; line-height: 1.65; color: var(--gc-text-muted); word-break: break-word; }
-.prose h1, .prose h2, .prose h3, .prose h4 { margin: 1rem 0 0.5rem; font-weight: 600; color: var(--gc-text); }
-.prose h2 { font-size: 1.15rem; } .prose h3 { font-size: 1.05rem; } .prose h4 { font-size: 0.95rem; }
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  margin: 1rem 0 0.5rem; font-weight: 700; color: var(--gc-text);
+  font-family: var(--font-body); text-transform: none; letter-spacing: normal;
+}
+.prose h1 { font-size: 1.35rem; } .prose h2 { font-size: 1.15rem; } .prose h3 { font-size: 1.05rem; } .prose h4 { font-size: 0.95rem; }
 .prose p { margin-bottom: 0.6rem; }
 .prose ul, .prose ol { margin-bottom: 0.6rem; padding-left: 1.5rem; }
 .prose li { margin-bottom: 0.25rem; }
@@ -361,11 +371,17 @@ fluent-data-grid-cell { font-size: 0.9rem; }
 /* Frequency readout (e.g. 140.85) — ammo numerics */
 .gc-freq { font-family: var(--font-ammo); letter-spacing: 0.06em; color: var(--gc-text-soft); }
 
-/* HUD corner-bracket frame — 4 L-shaped ticks, no extra markup */
-.hud-frame {
+/* HUD corner-bracket frame — 4 L-shaped ticks painted on a ::before overlay so they never
+   compete with the host element's own `background` (that conflict turned the whole chamber
+   green on hover). Static by default; `.is-live` brightens them green (no hover reaction). */
+.hud-frame { position: relative; }
+.hud-frame::before {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 1;
   --hud-b: 2px;   /* bracket thickness */
-  --hud-l: 16px;  /* bracket arm length */
-  position: relative;
+  --hud-l: 18px;  /* bracket arm length */
   background-image:
     linear-gradient(var(--gc-border-strong), var(--gc-border-strong)),
     linear-gradient(var(--gc-border-strong), var(--gc-border-strong)),
@@ -384,11 +400,8 @@ fluent-data-grid-cell { font-size: 0.9rem; }
   background-position:
     top left, top left, top right, top right,
     bottom left, bottom left, bottom right, bottom right;
-  transition: background-size .25s ease;
 }
-.hud-frame:hover,
-.hud-frame.is-live {
-  --hud-l: 22px;
+.hud-frame.is-live::before {
   background-image:
     linear-gradient(var(--gc-accent), var(--gc-accent)),
     linear-gradient(var(--gc-accent), var(--gc-accent)),

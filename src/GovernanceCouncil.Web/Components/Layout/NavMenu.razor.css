@@ -3,29 +3,31 @@
     display: flex; align-items: center; gap: 0.65rem;
     min-height: 3.75rem; padding: 0.75rem 1.1rem;
     border-bottom: 1px solid var(--gc-border);
+    overflow: hidden;
 }
 .gc-brand-emblem {
-    font-size: 1.35rem; line-height: 1;
-    filter: drop-shadow(0 0 6px rgba(110,168,254,0.35));
+    font-size: 1.35rem; line-height: 1; flex: 0 0 auto;
+    filter: drop-shadow(0 0 6px rgba(55,224,138,0.35));
 }
 .gc-brand-emblem-img { width: 1.6rem; height: 1.6rem; display: block; object-fit: contain; }
-.gc-brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+.gc-brand-text { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; }
 .gc-brand-eyebrow {
-    font-family: var(--font-tactical);
-    font-size: 0.62rem; font-weight: 400; letter-spacing: 0.18em;
+    font-family: var(--font-body);
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--gc-text-soft);
+    overflow-wrap: anywhere;
 }
 .gc-brand-name {
-    font-family: var(--font-display);
-    font-size: 1.05rem; font-weight: 600; color: var(--gc-text);
-    text-transform: uppercase; letter-spacing: 0.04em;
-    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: 1.05rem; font-weight: 700; color: var(--gc-text);
+    text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.15;
+    text-decoration: none; overflow-wrap: anywhere;
 }
 .gc-brand-name:hover { color: var(--gc-accent-hover); text-decoration: none; }
 
 .gc-nav-section {
-    font-family: var(--font-hud);
-    font-size: 0.66rem; font-weight: 400; letter-spacing: 0.12em;
+    font-family: var(--font-body);
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--gc-text-soft);
     padding: 1rem 1.4rem 0.35rem;
 }
@@ -53,7 +55,8 @@
     border-left: 3px solid transparent; border-radius: 8px;
     height: 2.65rem; display: flex; align-items: center; gap: 0.7rem; padding: 0 0.85rem;
     width: 100%;
-    font-family: var(--font-hud); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.82rem;
+    font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.95rem; font-weight: 600;
+    white-space: nowrap;
 }
 .nav-item ::deep .gc-nav-ic { flex: 0 0 auto; }
 .nav-item ::deep a.active {

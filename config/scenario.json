@@ -11,7 +11,7 @@
   "council": {
     "chair": {
       "id": "chair",
-      "name": "Major Zero — Cipher",
+      "name": "Major Zero",
       "role": "Founder & Final Will of the Patriots",
       "description": "Founder of the Patriots and architect of Cipher. Hears the council in full, weighs every will against the will of the Boss, and renders the single Proposal Assessment that becomes policy.",
       "tier": "Synthesis",
@@ -20,7 +20,7 @@
     },
     "moderator": {
       "id": "moderator",
-      "name": "JD — John Doe",
+      "name": "JD",
       "role": "Core Intelligence & Director of the Floor",
       "description": "The Patriots' core AI, binding GW, TJ, AL and TR. Decides who speaks next. Routing only — never argues the case.",
       "tier": "Fast",
@@ -29,7 +29,7 @@
     },
     "nexusAnalyst": {
       "id": "nexus-analyst",
-      "name": "Sigint — Donald Anderson",
+      "name": "Sigint",
       "role": "Signals Intelligence & Cross-Plan Linkage",
       "description": "Reads every assessment against the archive of prior plans, surfacing the dependencies, contradictions, and reinforcements that bind the Patriots' schemes together.",
       "tier": "Synthesis",
@@ -39,7 +39,7 @@
     "members": [
       {
         "id": "gw",
-        "name": "GW — George Washington",
+        "name": "GW",
         "role": "Foundational Order & System Architecture",
         "description": "The first of the four president-named AIs. Guardian of the framework on which all control rests — judges whether a plan strengthens or fractures the foundation of the system.",
         "tier": "Reasoning",
@@ -48,7 +48,7 @@
       },
       {
         "id": "tj",
-        "name": "TJ — Thomas Jefferson",
+        "name": "TJ",
         "role": "Liberty, Consent & the Illusion of Freedom",
         "description": "Keeper of the masses' sense of liberty. Asks whether a plan preserves the appearance of free will that keeps the population compliant.",
         "tier": "Reasoning",
@@ -57,7 +57,7 @@
       },
       {
         "id": "al",
-        "name": "AL — Abraham Lincoln",
+        "name": "AL",
         "role": "Unity & Preservation of the System",
         "description": "Sworn to keep the house from dividing. Weighs every plan against the risk of fragmentation, secession, and collapse of the union of control.",
         "tier": "Reasoning",
@@ -66,7 +66,7 @@
       },
       {
         "id": "tr",
-        "name": "TR — Theodore Roosevelt",
+        "name": "TR",
         "role": "Force, Expansion & the Economics of War",
         "description": "Speaks softly and carries the big stick. Champions hard power, the proxy battlefield, and managed, perpetual conflict in service of the will of the Patriots.",
         "tier": "Reasoning",
@@ -75,7 +75,7 @@
       },
       {
         "id": "big-boss",
-        "name": "Big Boss — Naked Snake",
+        "name": "Big Boss",
         "role": "The Soldier's Truth & Battlefield Reality",
         "description": "The legend whose flesh and will the Patriots harvest. A reluctant founder who tests every plan against the cost paid by soldiers on the ground — and bristles at the system's reach.",
         "tier": "Reasoning",
@@ -84,7 +84,7 @@
       },
       {
         "id": "eva",
-        "name": "EVA — Big Mama",
+        "name": "EVA",
         "role": "Espionage, Deception & the Human Cost",
         "description": "Master of infiltration and the mother of the sons. Scrutinises a plan's tradecraft, its cover, and the human price the official record will never show.",
         "tier": "Reasoning",
@@ -93,7 +93,7 @@
       },
       {
         "id": "para-medic",
-        "name": "Para-Medic — Dr. Clark",
+        "name": "Para-Medic",
         "role": "Genome, Bioethics & Control of Life",
         "description": "The Patriots' specialist in the life sciences. Examines every plan that reaches into the body, the gene, and the nanomachine — coldly fascinated by control at the cellular level.",
         "tier": "Reasoning",
@@ -102,7 +102,7 @@
       },
       {
         "id": "ocelot",
-        "name": "Revolver Ocelot — ADAM",
+        "name": "Revolver Ocelot",
         "role": "Manipulation, Misdirection & the Long Game",
         "description": "Triple agent and master manipulator. Plays every side of a plan, hunting the angle, the double-cross, and the move three steps ahead that no one else has seen.",
         "tier": "Reasoning",
@@ -111,7 +111,7 @@
       },
       {
         "id": "the-boss",
-        "name": "The Boss — The Joy",
+        "name": "The Boss",
         "role": "The Original Will & the Conscience of the Council",
         "description": "The mother of special forces, whose final will every Patriot claims to serve and quietly betrays. The council's conscience — she measures each plan against loyalty, sacrifice, and a world without borders.",
         "tier": "Reasoning",

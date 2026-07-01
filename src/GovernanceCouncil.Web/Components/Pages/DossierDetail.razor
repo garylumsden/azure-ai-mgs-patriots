@@ -52,7 +52,7 @@ else
     }
     else if (_activeTab == "rendered")
     {
-        <div class="border rounded p-4 bg-white">
+        <div class="border rounded p-4 prose">
             @((MarkupString)Markdown.ToHtml(_markdownContent, _markdownPipeline))
         </div>
     }
