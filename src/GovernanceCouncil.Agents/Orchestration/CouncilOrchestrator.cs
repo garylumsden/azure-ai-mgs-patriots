@@ -25,6 +25,7 @@ public sealed class CouncilOrchestrator
     private readonly NexusAnalystService? _nexusAnalyst;
     private readonly GovernanceCouncil.Agents.Runtime.CouncilRuntimeProvider _runtimes;
     private readonly GovernanceCouncil.Agents.Provisioning.RaiPolicyManager? _raiPolicy;
+    private readonly GovernanceCouncil.Agents.Knowledge.KnowledgeBaseManager? _knowledgeBase;
     private readonly ILogger<CouncilOrchestrator> _logger;
 
     public CouncilOrchestrator(
@@ -36,6 +37,7 @@ public sealed class CouncilOrchestrator
         GovernanceCouncil.Agents.Runtime.CouncilRuntimeProvider runtimes,
         NexusAnalystService? nexusAnalyst = null,
         GovernanceCouncil.Agents.Provisioning.RaiPolicyManager? raiPolicy = null,
+        GovernanceCouncil.Agents.Knowledge.KnowledgeBaseManager? knowledgeBase = null,
         ILogger<CouncilOrchestrator>? logger = null)
     {
         _notifier = notifier;
@@ -46,6 +48,7 @@ public sealed class CouncilOrchestrator
         _nexusAnalyst = nexusAnalyst;
         _runtimes = runtimes;
         _raiPolicy = raiPolicy;
+        _knowledgeBase = knowledgeBase;
         _logger = logger ?? Microsoft.Extensions.Logging.Abstractions.NullLogger<CouncilOrchestrator>.Instance;
     }
 
@@ -75,6 +78,23 @@ public sealed class CouncilOrchestrator
             CouncilModels.SetProfile(profile);
             Grounding.SetProvider(provider);
             AgentRuntime.SetMode(runtime);
+
+            // Ensure the Foundry IQ knowledge base exists whenever that provider is applied — the KB is
+            // only self-provisioned at startup, so switching to Foundry IQ at runtime (e.g. via the UI
+            // toggle) must create it here too, otherwise the grounding tool retrieves against a missing
+            // KB (BadRequest). Isolated: a KB hiccup must not block the runtime reload.
+            if (provider == Grounding.Provider.FoundryIq && _knowledgeBase is { IsConfigured: true })
+            {
+                try
+                {
+                    await _knowledgeBase.EnsureKnowledgeBaseAsync(ct);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Foundry IQ knowledge base provisioning failed while applying settings; grounding may be degraded until the KB is available");
+                }
+            }
+
             await _runtimes.Active.ReloadAsync(ct);
             _logger.LogInformation("Council settings applied");
         }
